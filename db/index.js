@@ -7,7 +7,7 @@ let mongoUrlLocal = "mongodb://admin:password@localhost:27017";
 let mongoUrlDocker = "mongodb://admin:password@mongodb";
 
 // "user-account" in demo with docker. "my-db" in demo with docker-compose
-let databaseName = "my-db";
+let databaseName = "crusty-db";
 
 mongoose
     .connect(`${mongoUrlLocal}`, { useNewUrlParser: true })
