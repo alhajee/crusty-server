@@ -1,7 +1,14 @@
 const Grocery = require('../models/grocery-model')
 
+
 createGrocery = (req, res) => {
+/*
+    Creates new groceries and saves them 
+    in the database
+*/
     const body = req.body
+
+
 
     if (!body) {
         return res.status(400).json({
@@ -10,12 +17,20 @@ createGrocery = (req, res) => {
         })
     }
 
-    const grocery = new Grocery(body)
+    // create a new grocery object
+    const grocery = new Grocery({
+        name: body.name,
+        quantity: body.quantity,
+        unit: body.unit,
+        price: body.price
+    })
 
+    // return an error if grocery object was not created
     if (!grocery) {
         return res.status(400).json({ success: false, error: err })
     }
 
+    // save grocery to database or return an error
     grocery
         .save()
         .then(() => {
