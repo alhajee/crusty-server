@@ -48,7 +48,12 @@ createGrocery = (req, res) => {
         })
 }
 
+
 updateGrocery = async (req, res) => {
+/*
+    Update all fields in a groceries and saves them 
+    in the database
+*/
     const body = req.body
 
     if (!body) {
@@ -89,6 +94,51 @@ updateGrocery = async (req, res) => {
     })
 }
 
+
+patchGrocery = async (req, res) => {
+    /*
+        Patch (inclusive update) only the provided fields in a groceries 
+        and saves them in the database
+    */
+        const body = req.body
+    
+        if (!body) {
+            return res.status(400).json({
+                success: false,
+                error: 'You must provide a body to patch',
+            })
+        }
+    
+        Grocery.findOne({ _id: req.params.id }, (err, grocery) => {
+            if (err) {
+                return res.status(404).json({
+                    err,
+                    message: 'Grocery not found!',
+                })
+            }
+            
+            // update the fields that were provided
+            grocery.set(body)
+
+            grocery
+                .save()
+                .then(() => {
+                    return res.status(200).json({
+                        success: true,
+                        id: grocery._id,
+                        message: 'Grocery patched!',
+                    })
+                })
+                .catch(error => {
+                    return res.status(404).json({
+                        error,
+                        message: 'Grocery not patched!',
+                    })
+                })
+        })
+    }
+
+    
 deleteGrocery = async (req, res) => {
     await Grocery.findOneAndDelete({ _id: req.params.id }, (err, grocery) => {
         if (err) {
@@ -137,6 +187,7 @@ getGroceries = async (req, res) => {
 module.exports = {
     createGrocery,
     updateGrocery,
+    patchGrocery,
     deleteGrocery,
     getGroceries,
     getGroceryById,
