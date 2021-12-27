@@ -140,6 +140,9 @@ patchGrocery = async (req, res) => {
 
     
 deleteGrocery = async (req, res) => {
+/*
+    Delete a single grocery from the database
+*/
     await Grocery.findOneAndDelete({ _id: req.params.id }, (err, grocery) => {
         if (err) {
             return res.status(400).json({ success: false, error: err })
@@ -155,7 +158,11 @@ deleteGrocery = async (req, res) => {
     }).catch(err => console.log(err))
 }
 
+
 getGroceryById = async (req, res) => {
+/*
+    Get a single grocery object by its ID
+*/
     await Grocery.findOne({ _id: req.params.id }, (err, grocery) => {
         if (err) {
             return res.status(400).json({ success: false, error: err })
@@ -170,7 +177,11 @@ getGroceryById = async (req, res) => {
     }).catch(err => console.log(err))
 }
 
+
 getGroceries = async (req, res) => {
+/*
+    Get all groceries from the database
+*/
     await Grocery.find({}, (err, groceries) => {
         if (err) {
             return res.status(400).json({ success: false, error: err })
