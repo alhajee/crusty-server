@@ -19,6 +19,7 @@ const Grocery = new Schema(
         price: {
             type: Number, 
             min: 10,
+            // select: false, // TODO: Explicit select for security
             required: true
         },
     },
