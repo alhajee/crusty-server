@@ -65,10 +65,12 @@ updateGrocery = async (req, res) => {
                 message: 'Grocery not found!',
             })
         }
+
         grocery.name = body.name
         grocery.quantity = body.quantity
         grocery.unit = body.unit
-        grocery.time = body.time
+        grocery.price = body.price
+
         grocery
             .save()
             .then(() => {
